@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Chatbot</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="{{ url_for('static', filename='styles/style.css') }}">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    </head>
+    <body>
+        <section class="msger">
+            <header class="msger-header">
+                <div class="msger-header-title"></div>
+            </header>
+            <main class="msger-chat">
+                <div class="msg left-msg">
+                    <div class="msg-img" style="background-image: url(https://i.pinimg.com/originals/75/05/b5/7505b59ea4bad35a93b2f57c935969e8.gif)"></div>
+                    <div class="msg-bubble">
+                        <div class="msg-info">
+                            <div class="msg-info-name">Chatbot</div>
+                            <div class="msg-info-time">12:45</div>
+                        </div>
+                        <div class="msg-text">
+                            Hi, welcome to ChatBot! Go ahead and send me a message. 😄
+                        </div>
+                    </div>
+                </div>
+            </main>
+            <form class="msger-inputarea">
+                <input type="text" class="msger-input" id="textInput" placeholder="Enter your message...">
+                <button type="submit" class="msger-send-btn">Send</button>
+            </form>
+        </section>
+        <!-- partial -->
+        <script src='https://use.fontawesome.com/releases/v5.0.13/js/all.js'></script>
+        <script>
+            const msgerForm = get(".msger-inputarea");
+            const msgerInput = get(".msger-input");
+            const msgerChat = get(".msger-chat");
+            const BOT_IMG = "https://i.pinimg.com/originals/75/05/b5/7505b59ea4bad35a93b2f57c935969e8.gif";
+            const PERSON_IMG = "https://scontent.ftun15-1.fna.fbcdn.net/v/t1.6435-9/116618649_1518518011686163_8418632662000269660_n.jpg?_nc_cat=111&ccb=1-5&_nc_sid=174925&_nc_ohc=XU4rSqAh1_cAX-xGsGy&tn=0kx_wrgXQhn7bT9u&_nc_ht=scontent.ftun15-1.fna&oh=00_AT_y-hGrfMm0qwwRlPBTN6-2Y4jLmt3dCxWL5hCfgE9TaA&oe=6209AEE2";
+            const BOT_NAME = "    Biggie";
+            const PERSON_NAME = "Khalil Hajri";
+            msgerForm.addEventListener("submit", event => {
+                event.preventDefault();
+                const msgText = msgerInput.value;
+                temp = msgText.split(':')
+                if ((temp[0].toLowerCase()).trim() == 'google') {
+                    search = 'https://www.google.com/search?q=' + temp[1].trim()
+                    window.open(search)
+                }
+                if (! msgText) 
+                    return;
+                
+                if ((temp[0].toLowerCase()).trim() == 'set a timer') {
+                    play()
+                }
+
+                appendMessage(PERSON_NAME, PERSON_IMG, "right", msgText);
+                msgerInput.value = "";
+                botResponse(msgText);
+            });
+            function appendMessage(name, img, side, text) { // Simple solution for small apps
+                const msgHTML = `
+<div class="msg ${side}-msg">
+  <div class="msg-img" style="background-image: url(${img})"></div>
+  <div class="msg-bubble">
+    <div class="msg-info">
+      <div class="msg-info-name">${name}</div>
+      <div class="msg-info-time">${
+                    formatDate(new Date())
+                }</div>
+    </div>
+    <div class="msg-text">${text}</div>
+  </div>
+</div>
+`;
+                msgerChat.insertAdjacentHTML("beforeend", msgHTML);
+                msgerChat.scrollTop += 500;
+            }
+            function botResponse(rawText) { // Bot Response
+                $.get("/get", {msg: rawText}).done(function (data) {
+                    console.log(rawText);
+                    console.log(data);
+                    const msgText = data;
+                    appendMessage(BOT_NAME, BOT_IMG, "left", msgText);
+                });
+            }
+            // Utils
+            function get(selector, root = document) {
+                return root.querySelector(selector);
+            }
+            function formatDate(date) {
+                const h = "0" + date.getHours();
+                const m = "0" + date.getMinutes();
+
+                return `${
+                    h.slice(-2)
+                }:${
+                    m.slice(-2)
+                }`;
+            }
+        </script>
+    </body>
+</html>
