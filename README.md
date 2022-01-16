@@ -4,5 +4,5 @@
 3.Get the top ten globally popular songs at that moment<br />
 4.joke with you<br />
 
-# To check the complete list of capabilities and how to access them, type 'help' in the message box.
+<h3> To check the complete list of capabilities and how to access them, type 'help' in the message box.</h3>
 
