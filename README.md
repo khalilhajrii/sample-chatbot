@@ -8,5 +8,24 @@
 
 # How to Use on your System
 1.Clone this repository onto your system.<br />
+```
 git clone https://github.com/khalilhajrii/sample-chatbot.git
-
+```
+2. Change your directory to Chatbot:
+```
+cd Chatbot
+```
+3. Make sure you have all the required libraries listed in requirements.txt.
+```
+pip install Your-library-name 
+```
+4. Then run the follwing commands to run the application:
+```
+set FLASK_APP=app.py
+$env:FLASK_APP=app.py
+flask run
+```
+Or 
+```
+python app.py
+```
