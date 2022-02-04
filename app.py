@@ -93,12 +93,7 @@ def get_response(return_list,intents_json):
             song=chart[i]
             print(song.title,'- ',song.artist)
 
-    if tag=='timer':        
-        mixer.init()
-        x=input('Minutes to timer..')
-        time.sleep(float(x)*60)
-        mixer.music.load('Handbell-ringing-sound-effect.mp3')
-        mixer.music.play()
+    
 
     list_of_intents= intents_json['intents']    
     for i in list_of_intents:
