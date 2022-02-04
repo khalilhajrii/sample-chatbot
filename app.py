@@ -36,7 +36,7 @@ def bow(sentence, words, show_details=True):
     # bag of words - matrix of N words, vocabulary matrix
     bag = [0]*len(words)  
     for s in sentence_words:
-        for i,w in enumerate(words):
+        for i,w in words:
             if w == s: 
                 # assign 1 if current word is in the vocabulary position
                 bag[i] = 1
